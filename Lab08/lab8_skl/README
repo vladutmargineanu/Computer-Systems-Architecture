@@ -1,0 +1,49 @@
+ Margineanu Nicolae-Vladut
+ Grupa: 333CA
+
+		Laborato 08 ASC
+
+
+ Exercitiul 1:
+	Am executat 14000 de operatii intr-un kernel. Se observa ca fiecare
+ numarul de GFLOPS tinde sa se stabilizeze in jurul valorii de 440 - 450.
+
+ Exercitiul 2:
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ module load libraries/cuda
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ make
+	nvcc matrix_multiplication_skel.cu -o matrix_multiplication -lm
+	nvcc task_gflops.cu -o task_gflops -lm
+	nvcc example_debug.cu -o example_debug -lm
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ ./
+	example_debug          task_gflops            
+	matrix_multiplication  utils/                 
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ ./task_gflops 
+	SECONDS: 0.895
+	GFLOPS: 262.377
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ ./
+	example_debug          task_gflops            
+	matrix_multiplication  utils/                 
+	[nicolae.margineanu@hpsl-wn02 lab8_skl]$ ./matrix_multiplication 
+	Timing simple implementation... done.
+	Timing optimized implementation... done.
+	Matrix size: 1024x1024
+	Tile size: 16x16
+	Throughput of simple kernel: 97.0074 GFLOPS
+	Throughput of optimized kernel: 283.439 GFLOPS
+	Performance improvement: 2.92183x
+
+ Exercitiul 3:
+	Profiling
+
+	Se ruleaza nvpp si se observa ca 25% din timp este petrecut in kernelurile matrix_multiply,
+        pe cand 75% este petrecut in matrix_multiply_simple, lucru evidentiat si de speedupul
+        calculat mai sus.
+
+	nvprof afiseaza acelasi raport de timp intre cele doua kerneluri. Acesta
+	calculeaza si timpii medii pentru fiecare "apel" al fiecarui kernel:
+
+	22.162ms pentru matrix_multiply_simple
+
+	7.5740ms pentru matrix_multiply
+
+

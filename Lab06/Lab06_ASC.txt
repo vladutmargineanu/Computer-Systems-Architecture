@@ -1,0 +1,213 @@
+ 		
+	                        Laborator 06 - ASC
+
+ Exercitiu 1: TODO 1: Start testing for primes up to 4000 numbers. Compile a serial version with: gcc -o prime-ex primes.c
+
+==65272== Process terminating with default action of signal 2 (SIGINT)
+==65272==    at 0x40053F: TestForPrime (in /export/home/acs/stud/n/nicolae.margineanu/prime-ex)
+==65272==    by 0x400636: FindPrimes (in /export/home/acs/stud/n/nicolae.margineanu/prime-ex)
+==65272==    by 0x40069D: main (in /export/home/acs/stud/n/nicolae.margineanu/prime-ex)
+==65272== 
+--65272-- Start dumping at BB 2056670913 (Prg.Term.)...
+--65272-- Dump to /export/home/acs/stud/n/nicolae.margineanu/callgrind.out.65272
+--65272-- Dumping done.
+==65272== Events    : Ir
+==65272== Collected : 14392196704
+==65272== 
+==65272== I   refs:      14,392,196,704
+
+
+TODO 2: Increase the number of prime numbers tested to 400000 (test at least 40000 / 100000 / 200000 / 300000 / 400000). You might test more numbers. Record runtimes (e.g. time ./prime-ex).
+
+[nicolae.margineanu@hpsl-wn01 ~]$ time ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 	
+real	0m11.556s
+user	0m11.557s
+sys	0m0.005s
+
+
+// TODO 3: Compile a parallel version of the code (with OpenMP) with: gcc -fopenmp -o prime-omp primes.c 
+
+[nicolae.margineanu@hpsl-wn01 ~]$ gcc -fopenmp -o prime-omp primes.c 
+[nicolae.margineanu@hpsl-wn01 ~]$ time ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 	
+real	0m11.984s
+user	0m11.986s
+sys	0m0.006s
+
+TODO 4: Record runtimes for the same dimensions as in TODOs 1 and 2.
+int globalPrimes [300000];
+
+[nicolae.margineanu@hpsl-wn01 ~]$ gcc -fopenmp -o prime-omp primes.c 
+[nicolae.margineanu@hpsl-wn01 ~]$ time ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 	
+real	0m12.049s
+user	0m12.053s
+sys	0m0.002s
+
+// TODO 5: Print the first "printNr" prime numbers from the saved list. Test & explain output when using serial / parallel (OpenMP) version for points 1 through 4 (above).
+
+1. In paralel
+
+[nicolae.margineanu@hpsl-wn01 ~]$ ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 	
+
+2. In serie
+
+[nicolae.margineanu@hpsl-wn01 ~]$ ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 
+
+Exercitiu 2:
+
+[nicolae.margineanu@hpsl-wn01 ~]$ module avail
+
+--------------------- /usr/share/Modules/modulefiles ---------------------
+dot         module-git  module-info modules     null        use.own
+
+---------------------------- /etc/modulefiles ----------------------------
+compilers/gnu-4.9.4
+compilers/gnu-5.4.0
+compilers/gnu-6.2.0
+compilers/solarisstudio-12.5
+libraries/cuda
+libraries/cuda-10.2
+libraries/cuda-7.5
+libraries/cuda-8.0
+libraries/cuda-9.0
+libraries/cuda-9.1
+libraries/opencv-3.1.0-gcc-4.9.4
+libraries/openmpi-2.0.1-gcc-4.9.4
+libraries/openmpi-2.0.1-gcc-5.4.0
+utilities/intel_parallel_studio_xe_2016
+utilities/opencl
+[nicolae.margineanu@hpsl-wn01 ~]$ module load compilers/solarisstudio-12. compilers/gnu-6.2.0
+[nicolae.margineanu@hpsl-wn01 ~]$ module list
+Currently Loaded Modulefiles:
+  1) compilers/gnu-6.2.0            2) compilers/solarisstudio-12.5
+[nicolae.margineanu@hpsl-wn01 ~]$ gcc -g -o prime-ex primes.c
+[nicolae.margineanu@hpsl-wn01 ~]$ collect ./prime-ex
+Creating experiment database test.1.er (Process ID: 588) ...
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 
+
+TODO1: Screenshot1
+TODO2: Screenshot2
+int globalPrimes [400000];
+
+[nicolae.margineanu@hpsl-wn01 ~]$ gcc -g -o prime-ex primes.c
+[nicolae.margineanu@hpsl-wn01 ~]$ collect ./prime-ex
+Creating experiment database test.2.er (Process ID: 1095) ...
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541
+
+
+TODO3: Screenshot3
+[nicolae.margineanu@hpsl-wn01 ~]$ gcc -fopenmp -o prime-omp primes.c 
+[nicolae.margineanu@hpsl-wn01 ~]$ collect ./prime-ex
+Creating experiment database test.3.er (Process ID: 1297) ...
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 
+
+TODO4: TIME for parallel
+[nicolae.margineanu@hpsl-wn01 ~]$ time ./prime-ex
+100%1 	3 	5 	7 	11 	13 	17 	19 	23 	29 	31 	37 	41 	43 	47 	53 	59 	61 	67 	71 	73 	79 	83 	89 	97 	101 	103 	107 	109 	113 	127 	131 	137 	139 	149 	151 	157 	163 	167 	173 	179 	181 	191 	193 	197 	199 	211 	223 	227 	229 	233 	239 	241 	251 	257 	263 	269 	271 	277 	281 	283 	293 	307 	311 	313 	317 	331 	337 	347 	349 	353 	359 	367 	373 	379 	383 	389 	397 	401 	409 	419 	421 	431 	433 	439 	443 	449 	457 	461 	463 	467 	479 	487 	491 	499 	503 	509 	521 	523 	541 	
+real	0m11.323s
+user	0m11.324s
+sys	0m0.003s
+
+Exercitiul 3:
+
+make[1]: Leaving directory '/home/margineanu/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon'
+make VERSION=find_hotspots run_one
+make[1]: Entering directory '/home/margineanu/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon'
+./tachyon_find_hotspots  dat/balls.dat
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+
+CPU Time: 19.023 seconds.
+make[1]: Leaving directory '/home/margineanu/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon'
+make VERSION=analyze_locks run_one
+make[1]: Entering directory '/home/margineanu/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon'
+./tachyon_analyze_locks  dat/balls.dat
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+
+CPU Time: 1.851 seconds.
+
+[nicolae.margineanu@hpsl-wn01 tachyon]$ make
+make VERSION=find_hotspots ADD_TBB=1 build_one
+make[1]: Entering directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+make[1]: Nothing to be done for `build_one'.
+make[1]: Leaving directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+make VERSION=analyze_locks ADD_TBB=1 build_one
+make[1]: Entering directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+make[1]: Nothing to be done for `build_one'.
+make[1]: Leaving directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+make VERSION=find_hotspots run_one
+make[1]: Entering directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+./tachyon_find_hotspots  dat/balls.dat
+Warning: Can't attach shared memory to display: BadAccess (attempt to access private resource denied) (10)
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+
+CPU Time: 56.955 seconds.
+make[1]: Leaving directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+make VERSION=analyze_locks run_one
+make[1]: Entering directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+./tachyon_analyze_locks  dat/balls.dat
+Warning: Can't attach shared memory to display: BadAccess (attempt to access private resource denied) (10)
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+
+CPU Time: 23.991 seconds.
+make[1]: Leaving directory `/export/home/acs/stud/n/nicolae.margineanu/tachyon'
+
+
+Task 4: 
+margineanu@vladut:~/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon$ valgrind --tool=callgrind --collect-jumps=yes --dump-instr=yes --collect-systime=yes -- ./tachyon_find_hotspots dat/balls.dat
+==12715== Callgrind, a call-graph generating cache profiler
+==12715== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==12715== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==12715== Command: ./tachyon_find_hotspots dat/balls.dat
+==12715== 
+==12715== For interactive control, run 'callgrind_control -h'.
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+==12715== Process terminating with default action of signal 2 (SIGINT)
+==12715==    at 0x10B538: render_one_pixel(int, int, unsigned int*, unsigned int&, int, int, int, int) [clone .isra.1] (find_hotspots.cpp:93)
+==12715==    by 0x10B9BC: draw_trace() (find_hotspots.cpp:200)
+==12715==    by 0x10BB51: thread_trace(thr_parms*) (find_hotspots.cpp:219)
+==12715==    by 0x11A270: trace_shm(scenedef, int, int, int, int) (trace_rest.cpp:110)
+==12715==    by 0x11A32B: trace_region(scenedef, void*, int, int, int, int) (trace_rest.cpp:123)
+==12715==    by 0x10BFA9: rt_renderscene(void*) (api.cpp:124)
+==12715==    by 0x10BE82: tachyon_video::on_process() (video.cpp:159)
+==12715==    by 0x10B1CC: video::main_loop() (xvideo.cpp:258)
+==12715==    by 0x10A478: main (video.cpp:205)
+==12715== 
+==12715== Events    : Ir sysCount sysTime
+==12715== Collected : 22746535567 2170 1579
+==12715== 
+==12715== I   refs:      22,746,535,567
+
+margineanu@vladut:~/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon$ kcachegrind
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/16/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/22/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/24/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/32/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/48/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/64/"
+Invalid Context= "stock" line for icon theme:  "/usr/share/icons/ubuntu-mono-dark/stock/128/"
+Selected  "main"
+
+
+
+Exercitiul 4:
+Perf
+margineanu@vladut:~/Desktop/ASC/Lab06/tachyon_vtune_amp_xe/tachyon$ sudo perf record -a -g -- ./tachyon_find_hotspots
+Note: using generic X11 with default visual for 24-bit color depth
+Scene contains 7386 bounded objects.
+
+CPU Time: 18.428 seconds.
+[ perf record: Woken up 17 times to write data ]
+[ perf record: Captured and wrote 5.982 MB perf.data (33078 samples) ]
+
+
+
+
